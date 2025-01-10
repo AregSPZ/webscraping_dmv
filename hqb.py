@@ -1,4 +1,3 @@
-import time
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -10,15 +9,11 @@ from selenium.webdriver.support import expected_conditions as EC
 # Configure Chrome options
 chrome_options = Options()
 chrome_options.add_argument("--headless")  # Run in headless mode
-chrome_options.add_argument("--no-sandbox")  # Required for Render
-chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
 
 # path to ChromeDriver
 service = Service(r"/usr/bin/chromedriver")
 # initialize the driver
 driver = webdriver.Chrome(service=service, options=chrome_options)
-driver.set_page_load_timeout(180)  # Set a longer timeout
-driver.set_script_timeout(180)  # Set script timeout
 
 # Open the URL
 url = "https://roadpolice.am/hy/hqb"
@@ -79,7 +74,7 @@ def scan(current_test_date):
 
 # scan with current test date as input
 # the date should follow this format and not be in the past
-current_date = 'Մարտ 27, 2025'
+current_date = 'Մարտ 18, 2025'
 available_date = scan(current_date)
 
 # Close the browser
@@ -89,7 +84,7 @@ driver.quit()
 if available_date:
 
     message = f"An earlier driving test day is available: {available_date}"
-
+    # use ntfy.sh for sending push notifications using Python completely free
     url = "https://ntfy.sh/hqb"
 
     # Send the notification
@@ -99,6 +94,5 @@ if available_date:
         print("Notification sent successfully!")
     else:
         print(f"Failed to send notification: {response.status_code}")
-
 
 print(available_date)
