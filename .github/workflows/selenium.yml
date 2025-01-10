@@ -26,4 +26,4 @@ jobs:
 
     - name: Run Selenium Script
       run: |
-        DISPLAY=:99 python your_script.py  # Run the script with headless Chromium
+        DISPLAY=:99 python hqb.py  # Run the script with headless Chromium
