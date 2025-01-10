@@ -69,7 +69,7 @@ def scan(current_test_date):
 
 
 # scan with current test date as input
-# the date has to follow this format and not be in the past
+# the date should follow this format and not be in the past
 current_date = 'Մարտ 18, 2025'
 available_date = scan(current_date)
 
