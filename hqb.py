@@ -1,14 +1,20 @@
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+# Configure Chrome options
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Run in headless mode
+chrome_options.add_argument("--no-sandbox")  # Required for Render
+chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
 
 # Setup the WebDriver 
-service = Service(r"D:\chromedriver-win64\chromedriver.exe")
-driver = webdriver.Chrome(service=service)
+service = Service(r"/usr/bin/chromedriver")
+driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # Open the URL
 url = "https://roadpolice.am/hy/hqb"
@@ -28,10 +34,9 @@ dmvs_xpath = '/html/body/div/main/div[2]/div/div/div[2]/form/div[3]/span/span[1]
 dmvs = driver.find_element(By.XPATH, dmvs_xpath)
 dmvs.click()
 
-# choose Artashat DMV
-artashat_dmv = driver.find_element(By.XPATH, '/html/body/span/span/span[2]/ul/li/ul/li[7]')
-artashat_dmv.click()
-
+# choose the right DMV
+my_dmv = driver.find_element(By.XPATH, '/html/body/span/span/span[2]/ul/li/ul/li[7]')
+my_dmv.click()
 
 # wait for the month container to load
 month_container_xpath = '/html/body/div/main/div[2]/div/div/div[2]/form/div[4]/div[1]/div[2]/div/div[2]/div'
