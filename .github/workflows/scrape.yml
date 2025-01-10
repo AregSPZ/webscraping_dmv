@@ -2,7 +2,7 @@ name: Check DMV website
 
 on:
   schedule:
-    - cron: "*/5 * * * *"  # run every 5 minutes
+    - cron: "*/10 1-19 * * *"  # run every 10 minutes between 1 AM and 7 PM (UTC)
   workflow_dispatch:  # Allows you to manually trigger the workflow
 
 jobs:
