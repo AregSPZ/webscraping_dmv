@@ -26,6 +26,6 @@ jobs:
         sudo Xvfb :99 -ac &  # Start virtual display
 
 
-    - name: Run Selenium Script
+    - name: Run the script
       run: |
         DISPLAY=:99 python hqb.py  # Run the script with headless Chromium
