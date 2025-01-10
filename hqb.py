@@ -16,7 +16,9 @@ chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resou
 # path to ChromeDriver
 service = Service(r"/usr/bin/chromedriver")
 # initialize the driver
-driver = webdriver.Chrome(service=service, options=chrome_options, timeout=180)
+driver = webdriver.Chrome(service=service, options=chrome_options)
+driver.set_page_load_timeout(180)  # Set a longer timeout
+driver.set_script_timeout(180)  # Set script timeout
 
 # Open the URL
 url = "https://roadpolice.am/hy/hqb"
