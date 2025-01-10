@@ -2,7 +2,7 @@ name: Run Selenium Script
 
 on:
   schedule:
-    - cron: '0 * * * *'  # This runs the script every hour
+    - cron: '*/10 * * * *'  # run every 10 minutes
   workflow_dispatch:  # Allows you to manually trigger the workflow
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.12'  # You can specify the Python version you need
+        python-version: '3.12'  
 
     - name: Install dependencies
       run: |
