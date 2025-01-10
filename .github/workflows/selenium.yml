@@ -1,4 +1,4 @@
-name: Run Selenium Script
+name: Check DMV website
 
 on:
   schedule:
@@ -23,6 +23,8 @@ jobs:
         pip install selenium requests
         sudo apt-get install -y chromium-chromedriver
         sudo apt-get install -y chromium-browser
+        sudo Xvfb :99 -ac &  # Start virtual display
+
 
     - name: Run Selenium Script
       run: |
