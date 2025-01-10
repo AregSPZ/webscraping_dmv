@@ -22,4 +22,4 @@ ENV CHROMEDRIVER_BIN=/usr/bin/chromedriver
 COPY . /app
 
 # Run the Python script
-CMD ["python", "your_script.py"]
+CMD ["python", "hqb.py"]
