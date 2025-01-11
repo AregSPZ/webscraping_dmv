@@ -12,7 +12,7 @@ chrome_options = Options()
 chrome_options.add_argument("--headless")  # Run in headless mode
 
 # path to ChromeDriver
-service = Service(r"C:\Program Files\chromedriver-win64\chromedriver.exe")
+service = Service(r"/usr/bin/chromedriver")
 # initialize the driver
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
