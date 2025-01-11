@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -11,7 +12,7 @@ chrome_options = Options()
 chrome_options.add_argument("--headless")  # Run in headless mode
 
 # path to ChromeDriver
-service = Service(r"/usr/bin/chromedriver")
+service = Service(r"C:\Program Files\chromedriver-win64\chromedriver.exe")
 # initialize the driver
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
@@ -46,23 +47,47 @@ WebDriverWait(driver, 10).until(
 # get the button that shifts to the next month
 next_month = driver.find_element(By.XPATH, '/html/body/div/main/div[2]/div/div/div[2]/form/div[4]/div[1]/div[1]/span[2]')
 
+def to_dtdate(date):
+    '''Convert the date strings to datetime.date objects, with translating beforehand if necessary'''
+
+    translate_dict = {'Հունվար': 'January', 'Փետրվար': 'February', 'Մարտ': 'March', 'Ապրիլ': 'April', 'Մայիս': 'May', 'Հունիս': 'June', 'Հուլիս': 'July', 'Օգոստոս': 'August', 'Սեպտեմբեր': 'September', 'Հոկտեմբեր': 'October', 'Նոյեմբեր': 'November', 'Դեկտեմբեր': 'December'}
+
+    words = date.split()
+    # if the input was English from the start, no changes will be made
+    for AM in translate_dict.keys():
+        if words[0] == AM:
+            words[0] = translate_dict[words[0]]
+    return datetime.strptime(' '.join(words), '%B %d, %Y').date()
+
 
 def scan(current_test_date):
     '''Scan the days until found a free day while keeping in mind the current test day'''
+    
+    # get the current date and the current test date as date objects
+    today = datetime.now().date()
+    cur_test_dt = to_dtdate(current_test_date)
 
+    # scan the months starting from the current one
     flag = True
     while flag:
+
         # access the container containing the data for the current month
         container = driver.find_element(By.XPATH, month_container_xpath)
         # get the list of days in the current month
         current_month_elements = container.find_elements(By.TAG_NAME, 'span')
 
         for element in current_month_elements:
+            
+            # access the date in Armenian and convert to date object
+            date_arm = element.get_attribute('aria-label')
+            date_dt = to_dtdate(date_arm)
 
-            # stop iterating if found a free day or we got to the current test day (no sooner day was found)
-            if 'flatpickr-disabled' not in element.get_attribute('class') or element.get_attribute('aria-label') == current_test_date:
+            # stop iterating if:
+            # - found a free day which is in the future
+            # - we got / passed the current test day (no sooner day was found)
+            if ('flatpickr-disabled' not in element.get_attribute('class') and date_dt >= today) or date_dt >= cur_test_dt:
                 # assign nothing to free_date if we got to the current test day
-                free_date = element.get_attribute('aria-label') if element.get_attribute('aria-label') != current_test_date else None
+                free_date = date_arm if date_dt < cur_test_dt else None
                 flag = False
                 break
         
@@ -73,9 +98,9 @@ def scan(current_test_date):
 
 
 # scan with current test date as input
-# the date should follow this format and not be in the past
-current_date = 'Մարտ 18, 2025'
-available_date = scan(current_date)
+# the input should be Armenian or English and follow this format: '%B %d, %Y' 
+current_testdate = 'Մարտ 18, 2025'
+available_date = scan(current_testdate)
 
 # Close the browser
 driver.quit()
