@@ -34,9 +34,9 @@ dmvs_xpath = '/html/body/div/main/div[2]/div/div/div[2]/form/div[3]/span/span[1]
 dmvs = driver.find_element(By.XPATH, dmvs_xpath)
 dmvs.click()
 
-# choose the right DMV
-my_dmv = driver.find_element(By.XPATH, '/html/body/span/span/span[2]/ul/li/ul/li[7]')
-my_dmv.click()
+# choose a specific DMV
+selected_dmv = driver.find_element(By.XPATH, '/html/body/span/span/span[2]/ul/li/ul/li[7]')
+selected_dmv.click()
 
 # wait for the month container to load
 month_container_xpath = '/html/body/div/main/div[2]/div/div/div[2]/form/div[4]/div[1]/div[2]/div/div[2]/div'
@@ -54,9 +54,9 @@ def to_dtdate(date):
 
     words = date.split()
     # if the input was English from the start, no changes will be made
-    for AM in translate_dict.keys():
+    for AM, ENG in translate_dict.items():
         if words[0] == AM:
-            words[0] = translate_dict[words[0]]
+            words[0] = ENG
     return datetime.strptime(' '.join(words), '%B %d, %Y').date()
 
 
