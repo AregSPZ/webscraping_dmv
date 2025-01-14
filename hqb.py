@@ -1,5 +1,5 @@
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -63,8 +63,8 @@ def to_dtdate(date):
 
 def scan(current_test_date):
     '''Scan the days until found a free day while keeping in mind the current test day'''
-    # get the current date and the current test date as date objects
-    today = datetime.now().date()
+    # get the current date in local timezone and the current test date as date objects
+    today = (datetime.utcnow() + timedelta(hours=4)).date()
     cur_test_dt = to_dtdate(current_test_date)
     # scan the months starting from the current one
     flag = True
