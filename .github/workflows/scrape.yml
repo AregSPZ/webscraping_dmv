@@ -1,8 +1,6 @@
 name: Check DMV website
 
 on:
-  schedule:
-    - cron: "*/5 * * * *"
   workflow_dispatch:  # Allows you to manually trigger the workflow
 
 jobs:
