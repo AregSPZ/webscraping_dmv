@@ -50,8 +50,9 @@ next_month = driver.find_element(By.XPATH, '/html/body/div/main/div[2]/div/div/d
 def to_dtdate(date):
     '''Convert the date strings to datetime.date objects, with translating beforehand if necessary'''
 
-    translate_dict = {'Հունվար': 'January', 'Փետրվար': 'February', 'Մարտ': 'March', 'Ապրիլ': 'April', 'Մայիս': 'May', 'Հունիս': 'June',
-        'Հուլիս': 'July', 'Օգոստոս': 'August', 'Սեպտեմբեր': 'September', 'Հոկտեմբեր': 'October', 'Նոյեմբեր': 'November', 'Դեկտեմբեր': 'December'}
+    translate_dict = {'Հունվար': 'January', 'Փետրվար': 'February', 'Մարտ': 'March', 'Ապրիլ': 'April',
+                      'Մայիս': 'May', 'Հունիս': 'June', 'Հուլիս': 'July', 'Օգոստոս': 'August', 
+                      'Սեպտեմբեր': 'September', 'Հոկտեմբեր': 'October', 'Նոյեմբեր': 'November', 'Դեկտեմբեր': 'December'}
 
     words = date.split()
     # if the input was English from the start, no changes will be made
