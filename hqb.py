@@ -106,7 +106,7 @@ if available_date:
     # use ntfy.sh for sending push notifications using Python completely free
     url = "https://ntfy.sh/hqb"
     # Send the notification
-    response = requests.post(url, data=message)
+    response = requests.post(url, data=message, headers={'Priority': '5'})
 
     if response.status_code == 200:
         print("Notification sent successfully!")
