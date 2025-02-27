@@ -93,7 +93,7 @@ def scan(current_test_date):
 
 # scan with current test date as input
 # the input should be Armenian or English and follow this format: '%B %d, %Y' 
-current_testdate = 'Փետրվար 20, 2025'
+current_testdate = 'Ապրիլ 24, 2025'
 available_date = scan(current_testdate)
 
 # Close the browser
